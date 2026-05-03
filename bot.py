@@ -2,7 +2,16 @@
 import telebot
 import random
 import requests
-import json
+import threading
+from http.server import HTTPServer, BaseHTTPRequestHandler
+
+class S(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(b"OK")
+
+threading.Thread(target=lambda: HTTPServer(('0.0.0.0', 10000), S).serve_forever(), daemon=True).start()
  
 TOKEN = "8661353701:AAGw3QxlyzxdykjsQY4JJBQvPLHmJWzit2U"
 ADMIN_ID = "7984990535"
